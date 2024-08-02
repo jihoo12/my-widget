@@ -130,7 +130,7 @@ fn build_ui(app: &Application, content: &Vec<String>) {
                 
                 label_box
             }else {
-                let label = Label::new(Some((label_text)));
+                let label = Label::new(Some(label_text));
                 let label_box = GtkBox::new(Orientation::Horizontal, 6);
                 label_box.append(&label);
                 label_box

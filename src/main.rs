@@ -114,6 +114,29 @@ fn build_ui(app: &Application, content: &Vec<String>) {
             }
 
             box_container.append(&button);
+        } else if line.starts_with("label") {
+            let parts: Vec<&str> = line.split(';').collect();
+            let label_text = if parts.len() > 1 { parts[1].trim() } else { "Default" };
+            
+            let label = if parts.len() > 2 && parts[2].trim().starts_with("image:") {
+                let image_path = parts[2].trim()[6..].trim();
+                let image = Image::from_file(image_path);
+                image.set_pixel_size(64); // 이미지 크기를 조절합니다.
+                
+                let label = Label::new(Some(label_text));
+                let label_box = GtkBox::new(Orientation::Horizontal, 6);
+                label_box.append(&image);
+                label_box.append(&label);
+                
+                label_box
+            }else {
+                let label = Label::new(Some((label_text)));
+                let label_box = GtkBox::new(Orientation::Horizontal, 6);
+                label_box.append(&label);
+                label_box
+            };
+
+            box_container.append(&label);
         }
     }
 
